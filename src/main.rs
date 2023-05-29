@@ -56,12 +56,20 @@ fn brute_force_pattern(timer: &Timer) {
         })
         .collect();
 
-    // Initialse brute forcing
-    println!("Patterns to try: {}", patterns.len());
-    let mut pb = ProgressBar::new(patterns.len() as u64);
+    // Filter patterns with fixed dots
+    let patterns_with_fixed_dots = patterns
+        .into_iter()
+        .filter(|pattern| {
+            pattern[0] == &15 && pattern[2] == &10 && pattern[9] == &11 && pattern[10] == &3
+        })
+        .collect::<Vec<_>>();
+
+    // Initialize brute forcing
+    println!("Patterns to try: {}", patterns_with_fixed_dots.len());
+    let mut pb = ProgressBar::new(patterns_with_fixed_dots.len() as u64);
 
     // Try all patterns, start a timer
-    patterns
+    patterns_with_fixed_dots
         .into_iter()
         .inspect(render_pattern)
         .map(|pattern| (generate_phrase(&pattern), pattern))
