@@ -46,12 +46,18 @@ fn brute_force_pattern(timer: &Timer) {
 
     // Generate all possible patterns
     println!("Generating possible patterns...");
+    let mut count = 0;
     let patterns: Vec<_> = (PATTERN_LEN_MIN..=PATTERN_LEN_MAX)
         .flat_map(|n| {
             dots.iter().combinations(n as usize).flat_map(|mut dots| {
                 dots.permutation()
                     .filter(valid_distance)
                     .collect::<Vec<_>>()
+                let permutation_count = dots.permutation().filter(valid_distance).count();
+                pb.set(count as u64);
+                pb.message(format!("Permutations: {}", count));
+                pb.inc();
+                count += permutation_count;
             })
         })
         .collect();
