@@ -1,6 +1,5 @@
 extern crate itertools;
 extern crate pbr;
-extern crate permutator;
 
 mod config;
 
@@ -11,7 +10,6 @@ use std::time::Duration;
 
 use itertools::Itertools;
 use pbr::ProgressBar;
-use permutator::Permutation;
 use took::Timer;
 
 use config::*;
@@ -48,11 +46,10 @@ fn brute_force_pattern(timer: &Timer) {
     println!("Generating possible patterns...");
     let patterns: Vec<_> = (PATTERN_LEN_MIN..=PATTERN_LEN_MAX)
         .flat_map(|n| {
-            dots.iter().combinations(n as usize).flat_map(|mut dots| {
-                dots.permutation()
-                    .filter(valid_distance)
-                    .collect::<Vec<_>>()
-            })
+            dots.iter()
+                .permutations(n as usize)
+                .filter(valid_distance)
+                .collect::<Vec<_>>()
         })
         .collect();
 
