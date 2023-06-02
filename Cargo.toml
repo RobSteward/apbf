@@ -1,8 +1,8 @@
 [package]
 name = "apbf"
-version = "0.1.0"
-authors = ["timvisee <tim@visee.me>"]
-edition = "2018"
+version = "0.2.0"
+authors = ["timvisee <tim@visee.me>", "robsteward <robinscharf@gmail.com", "psarna"]
+edition = "2021"
 description = "Tool to brute force Android security pattern through TWRP recovery"
 
 [dependencies]

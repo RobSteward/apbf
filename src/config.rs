@@ -3,6 +3,16 @@
 //! All these constants must be set to correct values for your brute force attempt, before you
 //! start using the tool.
 
+/// Output normally returned to stdout for a decryption attempt.
+///
+/// The tool will stop if anything else was returned.
+pub const STDOUT_NORMAL: &str = "Attempting to decrypt data partition or user data via command line.
+Attempting to decrypt FBE for user 0...
+Failed to decrypt user 0";
+
+/// Partial output returned to stdout on successful decryption.
+pub const STDOUT_SUCCESS: &str = "Data successfully decrypted";
+
 /// What type of code we want to crack. Should likely be a pattern.
 ///
 /// Any of:
@@ -51,11 +61,11 @@ pub const CODE_TYPE: crate::Code = crate::Code::Pattern;
 /// // Only 9 center dots in 5x5 pattern
 /// pub const DOTS: [u16; 9] = [6, 7, 8, 11, 12, 13, 16, 17, 18];
 /// ```
-pub const DOTS: [u16; 9] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-
+pub const DOTS: [u16; 5] = [0, 5, 10, 15, 20];
+pub const REQUIRED_DOT_POSITIONS: [(usize, u16); 2] = [(0, 0), (1, 5)];
 /// Pattern:
 /// The size of the pattern grid, probably 3, 4 or 5.
-pub const GRID_SIZE: u16 = 3;
+pub const GRID_SIZE: u16 = 5;
 
 /// Pattern:
 /// The minimum length of patterns to attempt.

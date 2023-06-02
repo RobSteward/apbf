@@ -14,14 +14,6 @@ use took::Timer;
 
 use config::*;
 
-/// Output normally returned to stdout for a decryption attempt.
-///
-/// The tool will stop if anything else was returned.
-const STDOUT_NORMAL: &str = "Attempting to decrypt data partition via command line.\n";
-
-/// Partial output returned to stdout on successful decryption.
-const STDOUT_SUCCESS: &str = "Data successfully decrypted";
-
 /// Application entry point.
 fn main() {
     // Start a timer for the whole process
@@ -41,6 +33,7 @@ fn main() {
 fn brute_force_pattern(timer: &Timer) {
     // Get a list of dots we can use
     let dots = DOTS;
+    let required_dot_positions = REQUIRED_DOT_POSITIONS;
 
     // Generate all possible patterns
     println!("Generating possible patterns...");
@@ -50,6 +43,10 @@ fn brute_force_pattern(timer: &Timer) {
                 .permutations(n as usize)
                 .filter(valid_distance)
                 .collect::<Vec<_>>()
+        })
+        .filter(|pattern| {
+            // Check if the pattern contains the required numbers at the specified positions
+            required_dot_positions.iter().all(|&(pos, num)| pattern.get(pos) == Some(&&num))
         })
         .collect();
 
@@ -144,7 +141,7 @@ fn try_phrase(phrase: &str) -> bool {
     }
 
     // Regular output, continue
-    if status.success() && stdout == STDOUT_NORMAL && stderr == "" {
+    if status.success() && stderr == "" { //stdout == STDOUT_NORMAL && 
         return false;
     }
 
